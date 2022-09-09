@@ -4,6 +4,7 @@ import time
 import sys
 
 # 15 minutes duration
+# https://github.com/boppreh/mouse#api
 def clicker(duration = 900):
     try:
         print("Waiting for user to click target position...")
@@ -20,7 +21,7 @@ def clicker(duration = 900):
             mouse.move(xLocation, yLocation)
             mouse.click("left")
             print("Clicked!")
-            time.sleep(int(duration) * 60) 
+            time.sleep(int(duration)) 
     except KeyboardInterrupt:
         print("Stopping now..")
         sys.exit(0)
@@ -36,7 +37,7 @@ def typer(keystrokes = "a", delay = 900):
         while(True):
             keyboard.write(keystrokes)
             print("Typed!")
-            time.sleep(int(delay) * 60)
+            time.sleep(int(delay))
     except KeyboardInterrupt:
         print("Stopping now..")    
         sys.exit(0)
@@ -55,6 +56,8 @@ def main():
     print("1. Auto keystrokes")
     print("2. Manual clicker")
     print("3. Manual keystrokes")
+    print("4. Exit")
+
 
     mode = input("Select a mode: ")
     match mode:
@@ -69,6 +72,8 @@ def main():
             keystrokes = input("Enter the keystrokes combination: ")
             delay = input("Enter delay duration (seconds): ")
             typer(keystrokes, delay)
+        case _:
+            sys.exit(0)
 
 
 
