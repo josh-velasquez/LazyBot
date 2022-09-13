@@ -11,6 +11,7 @@ def timerDisplay(duration, message):
 # https://github.com/boppreh/mouse#api
 def clicker(duration = 900):
     try:
+        clickCounter = 0
         print("Waiting for user to click target position...")
         clicked = False
         while(not clicked):
@@ -23,14 +24,17 @@ def clicker(duration = 900):
         # record initial press
         timer = duration
         while(True):
-            if (timer == 0):
-                mouse.move(xLocation, yLocation)
-                mouse.click("left")
-                print("Clicked!")
-                timer = duration
             timerDisplay(timer, "Next Click")
             time.sleep(1)
             timer -= 1
+            if (timer == -1):
+                clickCounter += 1
+                mouse.move(xLocation, yLocation)
+                mouse.click("left")
+                print("\nClicked!")
+                print("Click Counter: " + str(clickCounter) + "\n")
+                timer = duration
+            
     except KeyboardInterrupt:
         print("Stopping now..")
         sys.exit(0)
@@ -43,15 +47,19 @@ def clicker(duration = 900):
 def typer(keystrokes = "a", delay = 900):
     print("Starting typer program...\n")
     try:
+        typeCounter = 0
         timer = delay
         while(True):
-            if (timer == 0):
-                keyboard.write(keystrokes)
-                print("Typed!")
-                timer = delay
             timerDisplay(timer, "Next Type")
             time.sleep(1)
             timer -= 1
+            if (timer == -1):
+                typeCounter += 1
+                keyboard.write(keystrokes)
+                print("\nTyped!")
+                print("Type Counter: " + str(typeCounter) + "\n")
+                timer = delay
+            
     except KeyboardInterrupt:
         print("Stopping now..")    
         sys.exit(0)
@@ -66,33 +74,30 @@ def typer(keystrokes = "a", delay = 900):
 def main():
     print("Welcome to LazyBot!")
     print("Options:")
-    print("0. Auto clicker")
-    print("1. Auto keystrokes")
-    print("2. Manual clicker")
-    print("3. Manual keystrokes")
-    print("4. Exit")
-    print("ctrl + c to exit the whole program.\n\n")
+    print("1. Auto clicker")
+    print("2. Auto keystrokes")
+    print("3. Manual clicker")
+    print("4. Manual keystrokes")
+    print("5. Exit")
+    print("ctrl + c to exit the whole program.\n")
 
 
     mode = input("Select a mode: ")
     match mode:
-        case "0":
-            clicker()
         case "1":
-            typer()
+            clicker()
         case "2":
-            duration = input("Duration per per click (seconds): ")
-            clicker(duration)
+            typer()
         case "3":
+            duration = input("Duration per per click (seconds): ")
+            clicker(int(duration))
+        case "4":
             keystrokes = input("Enter the keystrokes combination: ")
             delay = input("Enter delay duration (seconds): ")
-            typer(keystrokes, delay)
+            typer(keystrokes, int(delay))
         case _:
             sys.exit(0)
 
 
 
 main()
-
-# keyboard 
-# LazyBot
