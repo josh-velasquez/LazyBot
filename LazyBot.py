@@ -3,6 +3,10 @@ import mouse
 import time
 import sys
 
+def timerDisplay(duration, message):
+    mins, secs = divmod(duration, 60)
+    print(message ,': {:02d}:{:02d}'.format(mins, secs), end="\r")
+
 # 15 minutes duration
 # https://github.com/boppreh/mouse#api
 def clicker(duration = 900):
@@ -17,16 +21,21 @@ def clicker(duration = 900):
         print("Target location logged: X: " + str(xLocation) + " Y: " + str(yLocation))
         print("Starting click program...\n")
         # record initial press
+        timer = duration
         while(True):
-            mouse.move(xLocation, yLocation)
-            mouse.click("left")
-            print("Clicked!")
-            time.sleep(int(duration)) 
+            if (timer == 0):
+                mouse.move(xLocation, yLocation)
+                mouse.click("left")
+                print("Clicked!")
+                timer = duration
+            timerDisplay(timer, "Next Click")
+            time.sleep(1)
+            timer -= 1
     except KeyboardInterrupt:
         print("Stopping now..")
         sys.exit(0)
-    except Exception:
-        print("Failed to run clicker...")
+    except Exception as e:
+        print("Failed to run clicker..." + str(e))
         print("Stopping now...")
         sys.exit(0)
 
@@ -34,10 +43,15 @@ def clicker(duration = 900):
 def typer(keystrokes = "a", delay = 900):
     print("Starting typer program...\n")
     try:
+        timer = delay
         while(True):
-            keyboard.write(keystrokes)
-            print("Typed!")
-            time.sleep(int(delay))
+            if (timer == 0):
+                keyboard.write(keystrokes)
+                print("Typed!")
+                timer = delay
+            timerDisplay(timer, "Next Type")
+            time.sleep(1)
+            timer -= 1
     except KeyboardInterrupt:
         print("Stopping now..")    
         sys.exit(0)
@@ -57,6 +71,7 @@ def main():
     print("2. Manual clicker")
     print("3. Manual keystrokes")
     print("4. Exit")
+    print("ctrl + c to exit the whole program.\n\n")
 
 
     mode = input("Select a mode: ")
