@@ -31,9 +31,13 @@ def main(duration = 900):
                 print("\nClicked!")
                 print("Click Counter: " + str(clickCounter) + "\n")
                 timer = duration
-    except KeyboardInterrupt:
-        print("Stopping now..")
-        sys.exit(0)
+    except KeyboardInterrupt as keyInterrupt:
+        remap = input("Remap click location? (y/n)")
+        if (remap.lower() == "y"):
+            main()
+        else:
+            print("Stopping now.." + str(keyInterrupt))
+            sys.exit(0)
     except Exception as e:
         print("Failed to run clicker..." + str(e))
         print("Stopping now...")
