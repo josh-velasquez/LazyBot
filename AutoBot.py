@@ -6,7 +6,9 @@ def timerDisplay(duration, message):
     mins, secs = divmod(duration, 60)
     print(message ,': {:02d}:{:02d}'.format(mins, secs), end="\r")
 
-def main(duration = 900):
+# duration = seconds
+# click every 300 seconds (5 mins)
+def main(duration = 300):
     try:
         clickCounter = 0
         print("Waiting for user to click target position...")
