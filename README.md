@@ -1,5 +1,5 @@
-# LazyBot
-You are very lazy
+# Productivity Bot
+You are very productive!
 
 ## Creating Python Virtual Environment
 
